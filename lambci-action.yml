@@ -1,0 +1,5 @@
+name: 'lambci Ruby 2.7'
+description: 'Build AWS Lambda Ruby 2.7 Images'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
