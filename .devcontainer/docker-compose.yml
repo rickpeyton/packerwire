@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env.devcontainer
+    volumes:
+      - ..:/workspace:delegated
+      - ~/.gitconfig:/root/.gitconfig
+      - /var/run/docker.sock:/var/run/docker.sock
+      - packerwire_extensions:/root/.vscode-server:delegated
+      - packerwire_gems:/usr/local/bundle:delegated
+    ports:
+      - '3000:3000'
+    command: bash
+    stdin_open: true
+    tty: true
+volumes:
+  packerwire_extensions:
+  packerwire_gems:
