@@ -4,10 +4,10 @@ require "base64"
 
 # Global object that responds to the call method. Stay outside of the handler
 # to take advantage of container reuse
-$app ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
+APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 ENV["RACK_ENV"] ||= "production"
 
-def lambda_handler(event:, context:)
+def lambda_handler(event:) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize:
   body = if event["isBase64Encoded"]
            Base64.decode64 event["body"]
          else
@@ -49,7 +49,7 @@ def lambda_handler(event:, context:)
 
   begin
     # Response from Rack must have status, headers and body
-    status, headers, body = $app.call env
+    status, headers, body = APP.call env
 
     # body is an array. We combine all the items to a single string
     body_content = ""
