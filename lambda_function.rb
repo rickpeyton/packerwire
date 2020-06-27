@@ -7,7 +7,7 @@ require "base64"
 APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 ENV["RACK_ENV"] ||= "production"
 
-def lambda_handler(event:) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize:
+def lambda_handler(event:, **) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize:
   body = if event["isBase64Encoded"]
            Base64.decode64 event["body"]
          else
