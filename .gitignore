@@ -53,6 +53,6 @@ build-iPhoneSimulator/
 .rvmrcf
 
 # Used by RuboCop. Remote config files pulled in from inherit_from directive.
-.rubocop-https*
+.rubocop-https?--*
 .devcontainer/.env.devcontainer
 .env.deploy
