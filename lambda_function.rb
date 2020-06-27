@@ -2,12 +2,9 @@ require "json"
 require "rack"
 require "base64"
 
-# Global object that responds to the call method. Stay outside of the handler
-# to take advantage of container reuse
 APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
-ENV["RACK_ENV"] ||= "production"
 
-def lambda_handler(event:, **) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize:
+def lambda_handler(event:, **)
   body = if event["isBase64Encoded"]
            Base64.decode64 event["body"]
          else
