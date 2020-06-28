@@ -17,11 +17,11 @@ def lambda_handler(event:, **)
              else
                "HTTP_#{name}"
              end
-    request.env[header] = value.to_s
+    request.raw_env[header] = value.to_s
   end
 
   begin
-    status, headers, body = APP.call request.env
+    status, headers, body = APP.call request.raw_env
 
     body_content = ""
     body.each do |item|

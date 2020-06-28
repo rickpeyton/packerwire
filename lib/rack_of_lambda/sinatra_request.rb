@@ -14,7 +14,7 @@ module RackOfLambda
       event.fetch(:headers, {})
     end
 
-    def env
+    def raw_env
       {
         "REQUEST_METHOD" => event.dig(:requestContext, :http, :method),
         "SCRIPT_NAME" => "",
