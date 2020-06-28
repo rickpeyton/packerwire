@@ -9,5 +9,9 @@ module RackOfLambda
     def body
       event.fetch(:body, "")
     end
+
+    def headers
+      event.fetch(:headers, {})
+    end
   end
 end
