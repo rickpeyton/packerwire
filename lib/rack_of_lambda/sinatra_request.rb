@@ -25,6 +25,21 @@ module RackOfLambda
       }.merge(rack_env)
     end
 
+    def env
+      {}.tap do |transformed_env|
+        headers.each_pair do |key, value|
+          name = key.upcase.tr "-", "_"
+          header = case name
+                   when "CONTENT_TYPE", "CONTENT_LENGTH"
+                     name
+                   else
+                     "HTTP_#{name}"
+                   end
+          transformed_env[header] = value.to_s
+        end
+      end.merge(raw_env)
+    end
+
   private
 
     def rack_env

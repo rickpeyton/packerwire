@@ -9,19 +9,8 @@ APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 def lambda_handler(event:, **)
   request = RackOfLambda::SinatraRequest.new(event: event)
 
-  request.headers.each_pair do |key, value|
-    name = key.upcase.tr "-", "_"
-    header = case name
-             when "CONTENT_TYPE", "CONTENT_LENGTH"
-               name
-             else
-               "HTTP_#{name}"
-             end
-    request.raw_env[header] = value.to_s
-  end
-
   begin
-    status, headers, body = APP.call request.raw_env
+    status, headers, body = APP.call request.env
 
     body_content = ""
     body.each do |item|
