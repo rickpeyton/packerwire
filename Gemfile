@@ -6,6 +6,8 @@ gem "rack-contrib"
 gem "sinatra"
 
 group :development do
+  gem "pry"
   gem "ramsey_cop"
+  gem "rspec"
   gem "solargraph"
 end
