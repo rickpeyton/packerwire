@@ -5,5 +5,9 @@ module RackOfLambda
     def initialize(event:)
       @event = Sinatra::IndifferentHash.new.merge(event)
     end
+
+    def body
+      event.fetch(:body, "")
+    end
   end
 end

@@ -9,12 +9,6 @@ APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 def lambda_handler(event:, **)
   request = RackOfLambda::SinatraRequest.new(event: event)
 
-  body = if request.event["isBase64Encoded"]
-           Base64.decode64 request.event["body"]
-         else
-           request.event["body"]
-         end || ""
-
   # Rack expects the querystring in plain text, not a hash
   headers = request.event.fetch "headers", {}
 
@@ -29,7 +23,7 @@ def lambda_handler(event:, **)
 
     "rack.version" => Rack::VERSION,
     "rack.url_scheme" => headers.fetch("CloudFront-Forwarded-Proto") { headers.fetch("X-Forwarded-Proto", "https") },
-    "rack.input" => StringIO.new(body),
+    "rack.input" => StringIO.new(request.body),
     "rack.errors" => $stderr
   }
 
