@@ -9,20 +9,6 @@ APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 def lambda_handler(event:, **)
   request = RackOfLambda::SinatraRequest.new(event: event)
 
-  env = {
-    "REQUEST_METHOD" => request.event.dig("requestContext", "http", "method"),
-    "SCRIPT_NAME" => "",
-    "PATH_INFO" => request.event.dig("requestContext", "http", "path"),
-    "QUERY_STRING" => request.event.fetch("rawQueryString", ""),
-    "SERVER_NAME" => request.headers.fetch("host", "localhost"),
-    "SERVER_PORT" => request.headers.fetch("x-forwarded-port", 443).to_s,
-
-    "rack.version" => Rack::VERSION,
-    "rack.url_scheme" => request.headers.fetch("CloudFront-Forwarded-Proto") { request.headers.fetch("X-Forwarded-Proto", "https") },
-    "rack.input" => StringIO.new(request.body),
-    "rack.errors" => $stderr
-  }
-
   request.headers.each_pair do |key, value|
     name = key.upcase.tr "-", "_"
     header = case name
@@ -31,11 +17,11 @@ def lambda_handler(event:, **)
              else
                "HTTP_#{name}"
              end
-    env[header] = value.to_s
+    request.env[header] = value.to_s
   end
 
   begin
-    status, headers, body = APP.call env
+    status, headers, body = APP.call request.env
 
     body_content = ""
     body.each do |item|
