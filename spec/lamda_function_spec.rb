@@ -28,7 +28,8 @@ def event_fixture
       "accept-language": "en-us",
       "content-length": "0",
       "host": "gp27wx8ay2.execute-api.us-east-1.amazonaws.com",
-      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15" \
+        "(KHTML, like Gecko) Version/13.1.1 Safari/605.1.15",
       "x-amzn-trace-id": "Root=1-5ef7d277-0316c5a226e1aacce35772a9",
       "x-forwarded-for": "99.160.140.87",
       "x-forwarded-port": "443",
@@ -44,7 +45,8 @@ def event_fixture
         "path": "/",
         "protocol": "HTTP/1.1",
         "sourceIp": "99.160.140.87",
-        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15"
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15" \
+          "(KHTML, like Gecko) Version/13.1.1 Safari/605.1.15"
       },
       "requestId": "Oz3SwjSooAMEPtw=",
       "routeKey": "ANY /{proxy+}",
