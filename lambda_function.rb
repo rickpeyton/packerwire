@@ -2,7 +2,7 @@ require "json"
 require "rack"
 require "base64"
 
-require "rack_of_lambda"
+require_relative "./lib/rack_of_lambda"
 
 APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 
