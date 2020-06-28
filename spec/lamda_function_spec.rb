@@ -1,3 +1,5 @@
+require_relative "../lambda_function"
+
 RSpec.describe "Lambda Function" do
   describe "#lambda_handler" do
     it "has a 200 status code" do

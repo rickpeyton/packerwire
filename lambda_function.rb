@@ -2,27 +2,28 @@ require "json"
 require "rack"
 require "base64"
 
+require "rack_of_lambda"
+
 APP ||= Rack::Builder.parse_file("#{__dir__}/app/config.ru").first
 
 def lambda_handler(event:, **)
-  new_event = Sinatra::IndifferentHash.new
-  new_event.merge!(event)
+  request = RackOfLambda::SinatraRequest.new(event: event)
 
-  body = if new_event["isBase64Encoded"]
-           Base64.decode64 new_event["body"]
+  body = if request.event["isBase64Encoded"]
+           Base64.decode64 request.event["body"]
          else
-           new_event["body"]
+           request.event["body"]
          end || ""
 
   # Rack expects the querystring in plain text, not a hash
-  headers = new_event.fetch "headers", {}
+  headers = request.event.fetch "headers", {}
 
   # Environment required by Rack (http://www.rubydoc.info/github/rack/rack/file/SPEC)
   env = {
-    "REQUEST_METHOD" => new_event.dig("requestContext", "http", "method"),
+    "REQUEST_METHOD" => request.event.dig("requestContext", "http", "method"),
     "SCRIPT_NAME" => "",
-    "PATH_INFO" => new_event.dig("requestContext", "http", "path"),
-    "QUERY_STRING" => new_event.fetch("rawQueryString", ""),
+    "PATH_INFO" => request.event.dig("requestContext", "http", "path"),
+    "QUERY_STRING" => request.event.fetch("rawQueryString", ""),
     "SERVER_NAME" => headers.fetch("host", "localhost"),
     "SERVER_PORT" => headers.fetch("x-forwarded-port", 443).to_s,
 
@@ -62,7 +63,7 @@ def lambda_handler(event:, **)
       "body" => body_content
     }
 
-    response["isBase64Encoded"] = false if new_event["requestContext"].key?("elb")
+    response["isBase64Encoded"] = false if request.event["requestContext"].key?("elb")
   rescue Exception => e # rubocop:disable Lint/RescueException
     response = {
       "statusCode" => 500,
