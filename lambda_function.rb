@@ -11,19 +11,7 @@ def lambda_handler(event:, **)
   status, headers, body = APP.call(request.env)
   response = RackOfLambda::SinatraResponse.new(status: status, headers: headers, raw_body: body)
 
-  body_content = ""
-  body.each do |item|
-    body_content += item.to_s
-  end
-
-  {
-    "statusCode" => status,
-    "headers" => headers,
-    "body" => body_content
-  }
+  response.apigateway_format
 rescue StandardError => e
-  {
-    "statusCode" => 500,
-    "body" => e.message
-  }
+  { "statusCode" => 500, "body" => e.message }
 end
