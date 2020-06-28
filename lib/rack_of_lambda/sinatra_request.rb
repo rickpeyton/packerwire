@@ -29,18 +29,22 @@ module RackOfLambda
       {}.tap do |transformed_env|
         headers.each_pair do |key, value|
           name = key.upcase.tr "-", "_"
-          header = case name
-                   when "CONTENT_TYPE", "CONTENT_LENGTH"
-                     name
-                   else
-                     "HTTP_#{name}"
-                   end
+          header = header_key(name)
           transformed_env[header] = value.to_s
         end
       end.merge(raw_env)
     end
 
   private
+
+    def header_key(name)
+      case name
+      when "CONTENT_TYPE", "CONTENT_LENGTH"
+        name
+      else
+        "HTTP_#{name}"
+      end
+    end
 
     def rack_env
       {
