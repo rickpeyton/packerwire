@@ -1,13 +1,21 @@
-require "sinatra"
+require "logger"
+require "sinatra/base"
 
-before do
-  if !request.body.read.empty? && !request.body.empty?
-    request.body.rewind
-    @params = Sinatra::IndifferentHash.new
-    @params.merge!(JSON.parse(request.body.read))
+class Server < Sinatra::Base
+  set :logger, Logger.new(STDOUT)
+  set :public_folder, (proc { File.join(root, "public") })
+  set :root, File.dirname(__FILE__)
+  set :views, (proc { File.join(root, "views") })
+
+  before do
+    if !request.body.read.empty? && !request.body.empty?
+      request.body.rewind
+      @params = Sinatra::IndifferentHash.new
+      @params.merge!(JSON.parse(request.body.read))
+    end
   end
-end
 
-get "/" do
-  erb :index
+  get "/" do
+    erb :index
+  end
 end
