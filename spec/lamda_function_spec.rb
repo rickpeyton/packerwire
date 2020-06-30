@@ -11,7 +11,7 @@ RSpec.describe "Lambda Function" do
     it "has a body that includes the PackerWire index" do
       actual = lambda_handler(event: event_fixture)
 
-      expect(actual.dig("body")).to include("PackerWire Index")
+      expect(actual.dig("body")).to match(/PackerWire.+Index/m)
     end
   end
 end
