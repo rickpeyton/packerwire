@@ -1,4 +1,16 @@
+require "rack/test"
 require "pry"
+
+ENV["RACK_ENV"] = "test"
+
+require File.expand_path "../app/server.rb", __dir__
+
+module RSpecMixin
+  include Rack::Test::Methods
+  def app
+    described_class
+  end
+end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -10,4 +22,6 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  config.include RSpecMixin
 end

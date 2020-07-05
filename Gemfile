@@ -7,6 +7,7 @@ gem "sinatra"
 
 group :development do
   gem "pry"
+  gem "rack-test"
   gem "ramsey_cop"
   gem "rspec"
   gem "solargraph"

@@ -26,6 +26,8 @@ GEM
       rack (~> 2.0)
     rack-protection (2.0.8.1)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rainbow (3.0.0)
     ramsey_cop (0.23.0)
       rubocop (>= 0.82)
@@ -92,6 +94,7 @@ PLATFORMS
 DEPENDENCIES
   pry
   rack-contrib
+  rack-test
   ramsey_cop
   rspec
   sinatra
