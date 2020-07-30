@@ -18,4 +18,10 @@ class Server < Sinatra::Base
   get "/" do
     erb :index
   end
+
+  get "/*" do
+    status 503
+
+    erb :service_unavialable
+  end
 end
