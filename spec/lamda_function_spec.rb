@@ -9,6 +9,8 @@ RSpec.describe "Lambda Function" do
     end
 
     it "has a body that includes the PackerWire index" do
+      ENV["RACK_ENV"] = "production"
+
       actual = lambda_handler(event: event_fixture)
 
       expect(actual.dig("body")).to match(/I am going to reimagine PackerWire/m)

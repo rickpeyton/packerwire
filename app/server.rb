@@ -16,7 +16,7 @@ class Server < Sinatra::Base
   end
 
   get "/" do
-    erb :index
+    return erb :wip_index if ENV["RACK_ENV"] == "production"
   end
 
   get "/*" do
