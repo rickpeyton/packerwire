@@ -1,0 +1,9 @@
+.section-nav img {
+  max-width: 66%;  
+}
+
+@media (min-width: 400px) {
+  .section-nav img {
+    max-width: 300px;  
+  }
+}
