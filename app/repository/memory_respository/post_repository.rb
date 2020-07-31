@@ -21,8 +21,8 @@ module MemoryRepository
       object
     end
 
-    def latest
-      @records.sort_by(&:created_at).reverse.take(40)
+    def latest(last = 0)
+      @records.sort_by(&:created_at).reverse.slice(last.to_i, 40)
     end
   end
 end

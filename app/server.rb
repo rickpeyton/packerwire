@@ -17,6 +17,14 @@ class Server < Sinatra::Base
 
   configure :test, :development do
     Repository.register(:post, MemoryRepository::PostRepository.new)
+
+    require "factory_bot"
+    require "faker"
+    require_relative "../spec/factories/post_factory"
+    100.times do
+      post = Repository.for(:post).new(FactoryBot.attributes_for(:post))
+      Repository.for(:post).save(post)
+    end
   end
 
   before do
@@ -30,14 +38,7 @@ class Server < Sinatra::Base
   get "/" do
     return erb :wip_index if ENV["RACK_ENV"] == "production"
 
-    require "factory_bot"
-    require "faker"
-    require_relative "../spec/factories/post_factory"
-    50.times do
-      post = Repository.for(:post).new(FactoryBot.attributes_for(:post))
-      Repository.for(:post).save(post)
-    end
-    @posts = Repository.for(:post).latest
+    @posts = Repository.for(:post).latest(params[:last])
     erb :index
   end
 

@@ -15,6 +15,10 @@
   max-width: 66%;  
 }
 
+.u-center-text {
+  text-align: center;
+}
+
 @media (min-width: 400px) {
   .section-nav img {
     max-width: 300px;  
