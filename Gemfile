@@ -6,6 +6,8 @@ gem "rack-contrib"
 gem "sinatra"
 
 group :development do
+  gem "factory_bot"
+  gem "faker"
   gem "pry"
   gem "rack-test"
   gem "ramsey_cop"

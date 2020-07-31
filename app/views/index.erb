@@ -1,0 +1,14 @@
+<section class="section">
+  <div class="container">
+    <% @posts.each do |post| %>
+      <div class="row row-posts">
+        <div class="twelve columns">
+          <%= post.title %>
+        </div>
+        <div class="twelve columns row-posts-details">
+          <%= post.username %>, <%= ViewHelpers.time_ago(post.created_at) %> | <%= ViewHelpers.plural(post.replies, 'reply', 'replies') %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

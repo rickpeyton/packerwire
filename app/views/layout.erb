@@ -34,5 +34,14 @@
       </div>
     </section>
     <%= yield %>
+    <section class="section section-footer">
+      <div class="container">
+        <div class="row">
+          <div class="twelve columns">
+            &copy; <%= DateTime.now.strftime('%Y') %> packerwire.net
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>
