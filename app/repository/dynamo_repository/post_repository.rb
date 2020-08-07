@@ -16,19 +16,14 @@ module DynamoRepository
 
     def save(object)
       db.put_item(
-        {
-          item: {
-            pk1: "POSTS#" + DateTime.parse(object.created_at).strftime("%Y%m"),
-            sk1: "POST#" + KSUID.new(time: DateTime.parse(object.created_at).to_time.to_i).to_s,
-            created_at: object.created_at,
-            replies: object.replies.to_f,
-            title: object.title,
-            username: object.username
-          },
-          table_name: "packerwire"
-        }
+        { item: { pk1: "POSTS##{DateTime.parse(object.created_at).strftime('%Y%m')}",
+                  sk1: "POST##{KSUID.new(time: DateTime.parse(object.created_at).to_time.to_i)}",
+                  created_at: object.created_at,
+                  replies: object.replies.to_f,
+                  title: object.title,
+                  username: object.username },
+          table_name: "packerwire" }
       )
-
       object
     end
 
@@ -41,7 +36,32 @@ module DynamoRepository
         id = nil
         start_date = (DateTime.strptime(start_date, "%Y%m").to_time - 1.month).strftime("%Y%m")
       end
+      posts_results(posts)
+    end
 
+  private
+
+    def query_index(id:, start_date:)
+      db.query({ expression_attribute_values: index_expression(id: id, start_date: start_date),
+                 key_condition_expression: index_condition_expression(id: id),
+                 scan_index_forward: false,
+                 table_name: "packerwire" }).items
+    end
+
+    def index_expression(id:, start_date:)
+      return { ":v1" => "POSTS##{start_date}" } unless id
+
+      { ":v1" => "POSTS##{start_date}",
+        ":v2" => "POST##{id}" }
+    end
+
+    def index_condition_expression(id:)
+      return "pk1 = :v1" unless id
+
+      "pk1 = :v1 AND sk1 < :v2"
+    end
+
+    def posts_results(posts)
       posts.take(40).map do |item|
         new(
           id: item.dig("sk1").slice(5..-1),
@@ -50,35 +70,6 @@ module DynamoRepository
           title: item.dig("title"),
           username: item.dig("username")
         )
-      end
-    end
-
-  private
-
-    def query_index(id:, start_date:)
-      if id
-        db.query(
-          {
-            expression_attribute_values: {
-              ":v1" => "POSTS##{start_date}",
-              ":v2" => "POST##{id}"
-            },
-            key_condition_expression: "pk1 = :v1 AND sk1 < :v2",
-            scan_index_forward: false,
-            table_name: "packerwire"
-          }
-        ).items
-      else
-        db.query(
-          {
-            expression_attribute_values: {
-              ":v1" => "POSTS##{start_date}"
-            },
-            key_condition_expression: "pk1 = :v1",
-            scan_index_forward: false,
-            table_name: "packerwire"
-          }
-        ).items
       end
     end
   end

@@ -5,9 +5,9 @@ module Config
   class DynamoDevelopment
     def self.call
       config = new
-      # config.delete_table
-      # config.create_table
-      # config.create_posts
+      config.delete_table
+      config.create_table
+      config.create_posts
     end
 
     attr_reader :client
@@ -19,7 +19,7 @@ module Config
       Repository.register(:post, DynamoRepository::PostRepository.new)
     end
 
-    def create_table
+    def create_table # rubocop:disable Metrics/MethodLength
       client.create_table(
         {
           attribute_definitions: [
@@ -58,14 +58,12 @@ module Config
     end
 
     def create_posts
-      posts = get_postgres_posts
+      posts = postgres_posts
       posts.each do |post|
-        post_attributes = {
-          created_at: DateTime.parse(post.dig("created_at")).iso8601,
-          replies: post.dig("reply_count").to_i,
-          title: post.dig("title"),
-          username: post.dig("username")
-        }
+        post_attributes = { created_at: DateTime.parse(post.dig("created_at")).iso8601,
+                            replies: post.dig("reply_count").to_i,
+                            title: post.dig("title"),
+                            username: post.dig("username") }
         post_object = Repository.for(:post).new(post_attributes)
         Repository.for(:post).save(post_object)
       end
@@ -73,7 +71,7 @@ module Config
 
   private
 
-    def get_postgres_posts
+    def postgres_posts # rubocop:disable Metrics/MethodLength
       pg = PG::Connection.new(pg_details)
 
       post_query = <<~SQL
@@ -90,7 +88,7 @@ module Config
     end
 
     def pg_details
-      pg_details = {
+      {
         host: ENV["DB_HOST"],
         dbname: ENV["DB_NAME"],
         user: ENV["DB_USER"],

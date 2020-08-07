@@ -1,6 +1,6 @@
 module ViewHelpers
   class << self
-    def time_ago(created_at)
+    def time_ago(created_at) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       created_time = DateTime.iso8601(created_at).to_time.to_i
       current_time = Time.now.utc.to_i
       minutes_time = current_time - 5_400 # 90 minutes
