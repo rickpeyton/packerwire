@@ -10,8 +10,8 @@
         </div>
       </div>
     <% end %>
-    <div class="row u-center-text">
-      <a class="button button-primary" href="/?last=<%= @posts.length %>">Older</a>
+    <div class="row">
+      <a class="button button-primary" href="/?last_id=<%= @posts.last.id %>&last_index=<%= DateTime.parse(@posts.last.created_at).strftime("%Y%m") %>">Next page</a>
     </div>
   </div>
 </section>

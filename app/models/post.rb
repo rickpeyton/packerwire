@@ -7,6 +7,7 @@ class Post
 
   def initialize(attributes = {})
     @created_at = attributes.dig(:created_at)
+    @id = attributes.dig(:id)
     @replies = attributes.dig(:replies)
     @title = attributes.dig(:title)
     @username = attributes.dig(:username)

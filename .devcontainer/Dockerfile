@@ -1,5 +1,6 @@
 FROM lambci/lambda:build-ruby2.7
 USER root
+RUN yum -y install postgresql-devel
 ENV GEM_HOME /usr/local/bundle
 ENV BUNDLE_PATH="$GEM_HOME" \
   BUNDLE_SILENCE_ROOT_WARNING=1 \
