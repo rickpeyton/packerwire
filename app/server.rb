@@ -33,8 +33,8 @@ class Server < Sinatra::Base
   end
 
   configure :development do
-    Config::DynamoDevelopment.call
-    # Config::InMemoryDevelopment.call
+    # Config::DynamoDevelopment.call
+    Config::InMemoryDevelopment.call
   end
 
   before do
