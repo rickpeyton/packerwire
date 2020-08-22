@@ -21,7 +21,7 @@ module MemoryRepository
       object
     end
 
-    def latest(id: nil, index: DateTime.now.strftime("%Y%m"))
+    def latest(_id: nil, index: DateTime.now.strftime("%Y%m"))
       posts = []
       start_date = DateTime.strptime(index, "%Y%m").strftime("%Y-%m")
       while posts.size < 40
