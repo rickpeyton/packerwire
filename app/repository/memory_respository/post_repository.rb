@@ -21,8 +21,16 @@ module MemoryRepository
       object
     end
 
-    def latest(last = 0)
-      @records.sort_by(&:created_at).reverse
+    def latest(id: nil, index: DateTime.now.strftime("%Y%m"))
+      posts = []
+      start_date = DateTime.strptime(index, "%Y%m").strftime("%Y-%m")
+      while posts.size < 40
+        posts << @records.sort_by(&:created_at).reverse.select do |r|
+          r.created_at.start_with?(start_date)
+        end
+        start_date = (DateTime.strptime(start_date, "%Y-%m").to_time - 1.month).strftime("%Y-%m")
+      end
+      posts.flatten.take(40)
     end
   end
 end
