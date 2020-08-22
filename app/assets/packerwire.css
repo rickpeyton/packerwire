@@ -1,3 +1,16 @@
+.row-posts {
+  margin-bottom: 0.66rem;
+}
+
+.row-posts-details {
+  color: #828282;
+  font-size: 85%;
+}
+
+.section-footer {
+  text-align: center;
+}
+
 .section-nav img {
   max-width: 66%;  
 }

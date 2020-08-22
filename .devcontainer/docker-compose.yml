@@ -16,6 +16,12 @@ services:
     command: bash
     stdin_open: true
     tty: true
+    depends_on:
+      - db
+  db:
+    image: amazon/dynamodb-local
+    ports:
+      - '8000:8000'
 volumes:
   packerwire_extensions:
   packerwire_gems:

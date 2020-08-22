@@ -1,0 +1,1 @@
+module DynamoRepository; end

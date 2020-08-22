@@ -1,24 +1,17 @@
 <section class="section">
   <div class="container">
-    <div class="row">
-      <div class="twelve columns">
-        <p>
-          Big changes are coming. I am going to reimagine PackerWire. All of
-          your accounts and posts will transfer, but the implementation will be
-          very different.
-        </p>
-        <p>
-          I'm going to embrace the Wire portion of our name and turn this more
-          into a feed of the day's top Packers news. You will still be able to
-          add comments and even start conversations, but it'll be a little more
-          ProFootballTalk.com than a pure message board.
-        </p>
-        <p>
-          Feel free to reach out if you have any questions (peytorb@gmail.com).
-          The changes will be iterative. Expect a read-only version of the new
-          concept soon.
-        </p>
+    <% @posts.each do |post| %>
+      <div class="row row-posts">
+        <div class="twelve columns">
+          <%= post.title %>
+        </div>
+        <div class="twelve columns row-posts-details">
+          <%= post.username %>, <%= ViewHelpers.time_ago(post.created_at) %> | <%= ViewHelpers.plural(post.replies, 'reply', 'replies') %>
+        </div>
       </div>
+    <% end %>
+    <div class="row">
+      <a class="button button-primary" href="/?last_id=<%= @posts.last.id %>&last_index=<%= DateTime.parse(@posts.last.created_at).strftime("%Y%m") %>">Next page</a>
     </div>
   </div>
 </section>
