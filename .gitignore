@@ -1,1 +1,4 @@
 .env
+forum/cache/*
+!forum/cache/.htaccess
+!forum/cache/index.htm
