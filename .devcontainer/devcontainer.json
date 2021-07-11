@@ -1,0 +1,11 @@
+{
+  "name": "PackerWire",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "forum",
+  "workspaceFolder": "/var/www/html",
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "extensions": ["esbenp.prettier-vscode", "ms-azuretools.vscode-docker"],
+  "forwardPorts": [80, 5432]
+}
