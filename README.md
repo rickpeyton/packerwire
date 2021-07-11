@@ -1,5 +1,3 @@
 # PackerWire
 
-## Publishing PackerWire
-
-This repository uses Github Actions for continuos deployment
+## Use phpBB for the forum and as a CMS for the front-end
