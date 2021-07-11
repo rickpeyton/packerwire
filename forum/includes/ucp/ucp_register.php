@@ -41,15 +41,16 @@ class ucp_register
 
 		$coppa			= $request->is_set('coppa_yes') ? 1 : ($request->is_set('coppa_no') ? 0 : false);
 		$coppa			= $request->is_set('coppa') ? $request->variable('coppa', 0) : $coppa;
-		$agreed			= $request->variable('agreed', false);
+		$agreed			= true; // Rick: Skip terms page
 		$submit			= $request->is_set_post('submit');
 		$change_lang	= $request->variable('change_lang', '');
 		$user_lang		= $request->variable('lang', $user->lang_name);
 
-		if ($agreed && !check_form_key('ucp_register'))
-		{
-			$agreed = false;
-		}
+		// Rick: Skip terms page
+		// if ($agreed && !check_form_key('ucp_register'))
+		// {
+		// 	$agreed = false;
+		// }
 
 		if ($coppa !== false && !check_form_key('ucp_register'))
 		{
@@ -91,7 +92,7 @@ class ucp_register
 					$submit = false;
 
 					// Setting back agreed to let the user view the agreement in his/her language
-					$agreed = false;
+					// $agreed = false; // Rick: Skip terms page
 				}
 
 				$user_lang = $use_lang;
