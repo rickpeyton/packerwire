@@ -10,6 +10,7 @@ services:
     command: apache2-foreground
     ports:
       - "80:80"
+    env_file: .env
   db:
     image: postgres:12.7
     restart: always
