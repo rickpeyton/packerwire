@@ -1,0 +1,21 @@
+/*  phpBB3 Style Sheet
+    --------------------------------------------------------------
+	Style name:			packerwire (the default phpBB 3.3.x style)
+	Based on style:	    prosilver
+    --------------------------------------------------------------
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Noticia+Text:wght@700&display=swap");
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+/* Links for forum/topic lists */
+a.forumtitle {
+	font-family: 'Noticia Text', serif;
+	font-size: 17px;
+	font-weight: 700;
+	text-decoration: none;
+}
