@@ -6,8 +6,10 @@
 
 A `.env` file with the following variables is required
 
+```bash
 DATABASE_HOST=
 DATABASE_NAME=
 DATABASE_USER=
 DATABASE_PASSWORD=
 PHPBB_ADMIN_PATH=
+```

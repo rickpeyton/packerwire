@@ -2,3 +2,5 @@
 forum/cache/*
 !forum/cache/.htaccess
 !forum/cache/index.htm
+tmp/
+.DS_Store
